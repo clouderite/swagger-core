@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.models.properties.Property;
 
-import javax.xml.bind.annotation.XmlType;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.xml.bind.annotation.XmlType;
 
 @XmlType(propOrder = {"type", "required", "discriminator", "properties"})
 @JsonPropertyOrder({"type", "required", "discriminator", "properties"})
@@ -19,6 +19,7 @@ public class ModelImpl extends AbstractModel {
     public static final String OBJECT = "object";
     private String type;
     private String format;
+    private String pattern;
     private String name;
     private List<String> required;
     private Map<String, Property> properties;
@@ -70,6 +71,11 @@ public class ModelImpl extends AbstractModel {
 
     public ModelImpl format(String format) {
         this.setFormat(format);
+        return this;
+    }
+
+    public ModelImpl pattern(String pattern) {
+        this.setPattern(pattern);
         return this;
     }
 
@@ -196,6 +202,14 @@ public class ModelImpl extends AbstractModel {
 
     public void setFormat(String format) {
         this.format = format;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
     }
 
     public void addRequired(String name) {
@@ -356,6 +370,9 @@ public class ModelImpl extends AbstractModel {
         if (format != null ? !format.equals(model.format) : model.format != null) {
             return false;
         }
+        if (pattern != null ? !pattern.equals(model.pattern) : model.pattern != null) {
+            return false;
+        }
         if (name != null ? !name.equals(model.name) : model.name != null) {
             return false;
         }
@@ -404,6 +421,7 @@ public class ModelImpl extends AbstractModel {
         int result = super.hashCode();
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (format != null ? format.hashCode() : 0);
+        result = 31 * result + (pattern != null ? pattern.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (required != null ? required.hashCode() : 0);
         result = 31 * result + (properties != null ? properties.hashCode() : 0);
